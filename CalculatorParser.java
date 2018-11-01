@@ -1,42 +1,72 @@
-package org.ioopm.calculator.ast; /// could place this in parser *for now*
+import java.io.StreamTokenizer;
+import java.io.IOException;
 
-public abstrac class SymbolicExpression {
-    private String name;
-    private String[] subExpressions;
-    /// The second argument allows us to pass in 0 or more arguments
-    public SymbolicExpression(String name, Object subExpressions...) {
-        this.name = name;
-        this.subExpressions = new String[subExpressions.length];
-        for (int i = 0; i < subExpressions.length; ++i) {
-            this.subExpressions[i] = subExpressions[i].toString());
-        }
+public class ParserExample {
+    private final StreamTokenizer st = new StreamTokenizer(System.in);
 
-    /// Returns e.g., "Constant(42)" if name is "Constant" and subExpressions is ["42"]
-    public SymbolicExpression toString(String msg...) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.name);
-        sb.append("(");
-        for (int i = 1; i < this.subExpressions.length; ++i) {
-            sb.append(this.subExpressions[i]);
-            if (i + 1 < subExpressions.length) {
-                sb.append(", ");
-            }
-        }
-        sb.append(")");
-        return sb.toString();
+    public ParserExample() {
+        /// We want to treat - and end of line as an ordinary tokens
+        this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
+        this.st.eolIsSignificant(true);
     }
 
-    public SymbolicExpression expression() {
-        SymbolicExpression result = term();
-        while (st.ttype == '+' || st.ttype == '-') {
-            int operation = st.ttype;
-            st.nextToken();
-            if (operation == '+') {
-                result = new SymbolicExpression("Addition", result, term());
+    /// This is the top-level expression -- the "entry point"
+    public double expression() throws IOException {
+        /// Read a term and make it the current sum
+        double sum = term();
+        /// Read the next token and put it in sval/nval/ttype depending on the token
+        this.st.nextToken();
+        /// If the token read was + or -, go into the loop
+        while (this.st.ttype == '+' || this.st.ttype == '-') {
+            if(this.st.ttype == '+'){
+                /// If we are adding things, read a term and add it to the current sum
+                sum += term();
             } else {
-                result = new SymbolicExpression("Subtraction", result, term());
+                /// If we are adding things, read a term and subtract it from the current sum
+                sum -= term();
             }
+            /// Read the next token into sval/nval/ttype so we can go back in the loop again
+            this.st.nextToken();
+        }
+        /// If we came here, we read something which was not a + or -, so we need to put
+        /// that back again (whatever it was) so that we did not accidentally ate it up!
+        this.st.pushBack();
+        /// We are done, return sum
+        return sum;
+    }
+
+    /// This method works like expression, but with factors and * instead of terms and +/-
+    private double term() throws IOException {
+        double prod = factor();
+        while (this.st.nextToken() == '*') {
+            prod *= factor();
+        }
+        this.st.pushBack();
+        return prod;
+    }
+
+    private double factor() throws IOException {
+        double result;
+        /// If we encounter a (, we know we are reading a full expression, so we call back up
+        /// to that method, and then try to read a closing ) at the end
+        if (this.st.nextToken() == '('){
+            result = expression();
+            /// This captures unbalanced parentheses!
+            if (this.st.nextToken() != ')') {
+                throw new SyntaxErrorException("expected ')'");
+            }
+        } else {
+            this.st.pushBack();
+            result = number();
         }
         return result;
+    }
+
+    private double number() throws IOException {
+        if (this.st.nextToken() == this.st.TT_NUMBER) {
+            return this.st.nval;
+        } else {
+            throw new SyntaxErrorException("Expected number");
+        }
     }
 }
