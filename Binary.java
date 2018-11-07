@@ -1,4 +1,4 @@
-package org.ioopm.calcuator.ast;
+package org.ioopm.calcuator.ast.Binary;
 
 public class Binary extends SymbolicExpression {
     private String op = null;
