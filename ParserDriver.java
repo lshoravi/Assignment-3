@@ -1,9 +1,10 @@
 /// File: ParserDriver.java
 import java.io.IOException;
+import org.ioopm.calculator.parser;
 
-class ParserDriver {
+public class ParserDriver {
     public static void main(String[] args) {
-        Parser p = new Parser();
+        CalculatorParser p = new CalculatorParser();
 
         System.out.println("Welcome to the parser!");
         System.out.print("Please enter an expression: ");

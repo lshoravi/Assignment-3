@@ -1,6 +1,6 @@
 package org.ioopm.calculator.ast; /// could place this in parser *for now*
 
-public abstrac class SymbolicExpression {
+public abstract class SymbolicExpression {
     private String name;
     private String[] subExpressions;
     /// The second argument allows us to pass in 0 or more arguments
@@ -11,7 +11,7 @@ public abstrac class SymbolicExpression {
             this.subExpressions[i] = subExpressions[i].toString());
 
     }
-}
+
     /// Returns e.g., "Constant(42)" if name is "Constant" and subExpressions is ["42"]
     public SymbolicExpression toString(String msg...) {
         StringBuilder sb = new StringBuilder();
@@ -25,19 +25,5 @@ public abstrac class SymbolicExpression {
         }
         sb.append(")");
         return sb.toString();
-    }
-
-    public SymbolicExpression expression() {
-        SymbolicExpression result = term();
-        while (st.ttype == '+' || st.ttype == '-') {
-            int operation = st.ttype;
-            st.nextToken();
-            if (operation == '+') {
-                result = new SymbolicExpression("Addition", result, term());
-            } else {
-                result = new SymbolicExpression("Subtraction", result, term());
-            }
-        }
-        return result;
     }
 }

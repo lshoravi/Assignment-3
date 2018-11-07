@@ -1,38 +1,28 @@
 import java.io.StreamTokenizer;
 import java.io.IOException;
+import org.ioopm.calculator.parser;
 
-public class ParserExample {
+public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(System.in);
 
-    public ParserExample() {
+    public CalculatorParser() {
         /// We want to treat - and end of line as an ordinary tokens
         this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
         this.st.eolIsSignificant(true);
     }
 
-    /// This is the top-level expression -- the "entry point"
-    public double expression() throws IOException {
-        /// Read a term and make it the current sum
-        double sum = term();
-        /// Read the next token and put it in sval/nval/ttype depending on the token
-        this.st.nextToken();
-        /// If the token read was + or -, go into the loop
-        while (this.st.ttype == '+' || this.st.ttype == '-') {
-            if(this.st.ttype == '+'){
-                /// If we are adding things, read a term and add it to the current sum
-                sum += term();
+    public SymbolicExpression expression() {
+        SymbolicExpression result = term();
+        while (st.ttype == '+' || st.ttype == '-') {
+            int operation = st.ttype;
+            st.nextToken();
+            if (operation == '+') {
+                result = new Addition(result, term());
             } else {
-                /// If we are adding things, read a term and subtract it from the current sum
-                sum -= term();
+                result = new SymbolicExpression("Subtraction", result, term());
             }
-            /// Read the next token into sval/nval/ttype so we can go back in the loop again
-            this.st.nextToken();
         }
-        /// If we came here, we read something which was not a + or -, so we need to put
-        /// that back again (whatever it was) so that we did not accidentally ate it up!
-        this.st.pushBack();
-        /// We are done, return sum
-        return sum;
+        return result;
     }
 
     /// This method works like expression, but with factors and * instead of terms and +/-
