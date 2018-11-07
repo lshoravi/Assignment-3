@@ -1,6 +1,8 @@
+package org.ioopm.calculator.parser;
+
 import java.io.StreamTokenizer;
 import java.io.IOException;
-import org.ioopm.calculator.parser;
+import org.ioopm.calculator.ast;
 
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(System.in);
