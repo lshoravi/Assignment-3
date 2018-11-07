@@ -1,4 +1,7 @@
 package org.ioopm.calculator.ast;
 
-public class Command extends SymbolicExpression {
+public class Negation extends Unary {
+    public Negation(SymbolicExpression pram) {
+        super("Negation", pram);
+    }
 }

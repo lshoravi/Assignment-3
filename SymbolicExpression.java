@@ -4,16 +4,17 @@ public abstract class SymbolicExpression {
     private String name;
     private String[] subExpressions;
     /// The second argument allows us to pass in 0 or more arguments
-    public SymbolicExpression(String name, Object subExpressions...) {
+    public SymbolicExpression(String name, Object subExpressions[]) {
         this.name = name;
         this.subExpressions = new String[subExpressions.length];
         for (int i = 0; i < subExpressions.length; ++i) {
-            this.subExpressions[i] = subExpressions[i].toString());
+            this.subExpressions[i] = subExpressions[i].toString();
+        }
 
     }
 
     /// Returns e.g., "Constant(42)" if name is "Constant" and subExpressions is ["42"]
-    public SymbolicExpression toString(String msg...) {
+    public SymbolicExpression toString(String msg) {
         StringBuilder sb = new StringBuilder();
         sb.append(this.name);
         sb.append("(");
