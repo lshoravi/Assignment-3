@@ -1,4 +1,4 @@
-package org.ioopm.calculator.ast.SymbolicExpression; /// could place this in parser *for now*
+
 
 public abstract class SymbolicExpression {
     private String name;
