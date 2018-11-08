@@ -5,8 +5,7 @@ public class Unary extends SymbolicExpression {
     private SymbolicExpression pram = null;
 
     public Unary(String op, SymbolicExpression pram) {
-        this.op = op;
-        this.pram = pram;
+        super(op, new SymbolicExpression[] {pram});
     }
 
 }
