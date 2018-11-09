@@ -5,4 +5,8 @@ public class Cos extends Unary {
         super("Cos", pram);
     }
 
+    @Override
+    public String getName() {
+        return "cos";
+    }
 }
