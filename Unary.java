@@ -9,4 +9,12 @@ public class Unary extends SymbolicExpression {
        this.pram = pram;
     }
 
+    @Override
+    public String getName() {
+        return this.op;
+    }
+
+    public String toString() {
+        return this.getName() + " " + this.pram.toString();
+     }
 }

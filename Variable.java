@@ -8,4 +8,9 @@ public class Variable extends Atom {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return this.id;
+    }
+
 }

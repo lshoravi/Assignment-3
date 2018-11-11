@@ -8,11 +8,14 @@ public class Binary extends SymbolicExpression {
         this.op = op;
         this.lhs = lhs;
         this.rhs = rhs;
+    }
 
+    @Override
+    public String getName() {
+        return this.op;
     }
 
     public String toString() {
-        String expression = (op + "(" + lhs.toString() + ", " + rhs.toString());
-        return expression;
-    }
+        return (this.lhs.toString() + " " + this.getName() + " " + this.rhs.toString());
+     }
 }
