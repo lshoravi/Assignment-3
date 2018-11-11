@@ -1,7 +1,9 @@
 
 
 public class Atom extends SymbolicExpression {
-    public Atom(String type, SymbolicExpression value) {
-        super(type, new SymbolicExpression[] {value});
+    private String type;
+
+    public Atom(String type) {
+        this.type = type;
     }
 }

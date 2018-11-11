@@ -4,6 +4,7 @@ public class Constant extends Atom {
     private double value;
 
     public Constant(double value) {
+        super("Constant");
         this.value = value;
     }
 
