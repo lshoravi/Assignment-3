@@ -15,6 +15,6 @@ public class Unary extends SymbolicExpression {
     }
 
     public String toString() {
-        return this.getName() + " " + this.pram.toString();
+        return this.getName() + " " + this.subtreeToString(pram);
      }
 }

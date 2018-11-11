@@ -1,7 +1,7 @@
 
 
 public abstract class SymbolicExpression {
-    private int priority;
+    private int priority = 10;
 
     public boolean isConstant() {
         return false;
@@ -13,5 +13,17 @@ public abstract class SymbolicExpression {
 
     public int getPriority() {
         return this.priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public String subtreeToString(SymbolicExpression e) {
+        if (e.getPriority() < this.getPriority()) {
+            return "(" + e.toString() + ")";
+        } else {
+            return  e.toString();
+        }
     }
 }
