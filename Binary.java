@@ -1,8 +1,8 @@
 
 public class Binary extends SymbolicExpression {
-    private String op = null;
-    private SymbolicExpression lhs = null;
-    private SymbolicExpression rhs = null;
+    protected String op = null;
+    protected SymbolicExpression lhs = null;
+    protected SymbolicExpression rhs = null;
 
     public Binary(String op, SymbolicExpression lhs, SymbolicExpression rhs, int priority) {
         this.op = op;

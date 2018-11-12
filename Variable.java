@@ -8,9 +8,19 @@ public class Variable extends Atom {
         this.id = id;
     }
 
+    public boolean equals(Object other) {
+        if(other instanceof Variable) {
+            return this.equals((Variable) other);
+        }
+        return false;
+    }
+
+    public boolean equals(Variable other) {
+        return this.id.equals(other.id);
+    }
+
     @Override
     public String toString() {
         return this.id;
     }
-
 }

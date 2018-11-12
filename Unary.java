@@ -1,8 +1,8 @@
 
 
 public class Unary extends SymbolicExpression {
-    private String op = null;
-    private SymbolicExpression pram = null;
+    protected String op = null;
+    protected SymbolicExpression pram = null;
 
     public Unary(String op, SymbolicExpression pram) {
        this.op = op;
