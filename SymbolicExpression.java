@@ -19,6 +19,14 @@ public abstract class SymbolicExpression {
         this.priority = priority;
     }
 
+    public boolean equals(Object other) {
+        throw new RuntimeException("equals not defined for expression");
+    }
+
+    public SymbolicExpression eval() {
+        throw new RuntimeException("eval not yet implemented");
+    }
+
     public String subtreeToString(SymbolicExpression e) {
         if (e.getPriority() < this.getPriority()) {
             return "(" + e.toString() + ")";

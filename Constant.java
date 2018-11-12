@@ -17,6 +17,17 @@ public class Constant extends Atom {
         return value;
     }
 
+    public boolean equals(Object other) {
+        if(other instanceof Constant) {
+            return this.equals((Constant) other);
+        }
+        return false;
+    }
+
+    public boolean equals(Constant other) {
+        return this.value == other.value;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(this.value);
