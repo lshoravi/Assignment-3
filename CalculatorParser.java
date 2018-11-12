@@ -4,5 +4,123 @@ import java.io.StreamTokenizer;
 import java.io.IOException;
 
 public class CalculatorParser {
+    private final StreamTokenizer st = new StreamTokenizer(System.in);
+
+    public CalculatorParser () {
+        this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
+        this.st.eolIsSignificant(true); /// parse end-of-line as ordinary token
+    }
+
+
+
+    public SymbolicExpression assignment() throws IOException {
+        SymbolicExpression result = lhs();
+        while (st.nextToken() == '=') {
+            result = new Assignment(result, rhs());
+        }
+        st.pushBack();
+        return result;
+    }
+
+    public SymbolicExpression lhs() throws IOException {
+        return expression();
+    }
+
+    public SymbolicExpression rhs() throws IOException {
+        st.nextToken(); // because identifier does not
+        SymbolicExpression result = identifier();
+        while (st.nextToken() == '=') {
+            result = new Assignment(result, rhs());
+        }
+        st.pushBack();
+        return result;
+    }
+
+    public SymbolicExpression expression() throws IOException {
+        SymbolicExpression result = term();
+        st.nextToken();
+        while (st.ttype == '+' || st.ttype == '-') {
+            if (st.ttype == '+') {
+                result = new Addition(result, primary());
+            } else {
+                result = new Subtraction(result, primary());
+                    }
+        }
+        st.pushBack();
+        return result;
+    }
+
+    public SymbolicExpression term() throws IOException {
+        SymbolicExpression result = primary();
+        st.nextToken();
+        while (st.ttype == '*' || st.ttype == '/') {
+            if (st.ttype == '*') {
+                result = new Multiplication(result, primary());
+            } else {
+                result = new Division(result, primary());
+            }
+            st.nextToken();
+        }
+        st.pushBack();
+        return result;
+    }
+
+    public SymbolicExpression primary() throws IOException {
+        int next = st.nextToken();
+        switch (next) {
+
+        case StreamTokenizer.TT_NUMBER:
+            return number();
+
+        case StreamTokenizer.TT_WORD:
+            ///TODO: checka om det e en unary operation!
+            if (st.sval == "log" ) {
+                return unary();
+            } else {
+                return identifier();
+            }
+
+        case ('('):
+            return assignment();
+
+        default:
+           throw new SyntaxErrorException("Expected strings, number or paranthesis as primary, got " + st.ttype);
+        }
+    }
+
+    public SymbolicExpression unary() throws IOException {
+        switch (st.sval) {
+        case "log":
+            return new Log(primary());
+        case "exp":
+            return new Exp(primary());
+        case "neg":
+            return new Negation(primary());
+        case "cos":
+            return new Cos(primary());
+        case "sin":
+            return new Sin(primary());
+        default:
+            throw new SyntaxErrorException("Expected unary operator, got " + st.sval);
+        }
+
+    }
+
+    public SymbolicExpression identifier() {
+        if (st.ttype == StreamTokenizer.TT_WORD) {
+            return new Variable(st.sval);
+        } else {
+            throw new SyntaxErrorException("Expected string as identifier, got " + st.ttype);
+        }
+    }
+
+    public SymbolicExpression number() {
+            if (st.ttype == StreamTokenizer.TT_NUMBER) {
+                return new Constant(st.nval);
+            } else {
+                 throw new SyntaxErrorException("Expected number as number, got " + st.ttype);
+            }
+    }
+
 
 }
