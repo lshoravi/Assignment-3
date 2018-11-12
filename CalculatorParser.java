@@ -2,16 +2,49 @@
 
 import java.io.StreamTokenizer;
 import java.io.IOException;
+import java.util.List;
+import java.util.Arrays;
 
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(System.in);
+    private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp", "neg");
 
     public CalculatorParser () {
         this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
         this.st.eolIsSignificant(true); /// parse end-of-line as ordinary token
     }
 
+    public SymbolicExpression top_level() throws IOException {
+        SymbolicExpression result = statement();
+        if  (st.nextToken() == StreamTokenizer.TT_EOL) {
+            return result;
+        } else {
+            throw new SyntaxErrorException("Expected EOL after statement, got " + st.ttype);
+        }
+    }
 
+    public SymbolicExpression statement() throws IOException {
+        st.nextToken();
+        if (st.ttype == StreamTokenizer.TT_WORD) {
+            if ((st.sval == "Vars") || (st.sval == "Quit"))  {
+                    return command();
+            }
+        }
+        st.pushBack();
+        return assignment();
+    }
+
+    public SymbolicExpression command() throws IOException {
+         if (st.ttype == StreamTokenizer.TT_WORD) {
+             if (st.sval == "Vars") {
+                 return new Vars();
+             }
+             else if (st.sval == "Quit") {
+                 return new Quit();
+             }
+         }
+         throw new SyntaxErrorException("Expected \"Vars\" or \"Quit\" as command, got " + st.ttype);
+    }
 
     public SymbolicExpression assignment() throws IOException {
         SymbolicExpression result = lhs();
@@ -41,10 +74,11 @@ public class CalculatorParser {
         st.nextToken();
         while (st.ttype == '+' || st.ttype == '-') {
             if (st.ttype == '+') {
-                result = new Addition(result, primary());
+                result = new Addition(result, term());
             } else {
-                result = new Subtraction(result, primary());
+                result = new Subtraction(result, term());
                     }
+            st.nextToken();
         }
         st.pushBack();
         return result;
@@ -73,15 +107,20 @@ public class CalculatorParser {
             return number();
 
         case StreamTokenizer.TT_WORD:
-            ///TODO: checka om det e en unary operation!
-            if (st.sval == "log" ) {
+            ///TODO: checka alla unary operation!
+            if (unaryOperations.contains(st.sval)) {
                 return unary();
             } else {
                 return identifier();
             }
 
         case ('('):
-            return assignment();
+            SymbolicExpression result =  assignment();
+            if (st.nextToken() == ')') {
+                return result;
+            } else {
+                throw new SyntaxErrorException("Missmatched paranthesis, assignment followed by " + st.ttype);
+            }
 
         default:
            throw new SyntaxErrorException("Expected strings, number or paranthesis as primary, got " + st.ttype);

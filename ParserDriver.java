@@ -9,7 +9,7 @@ public class ParserDriver {
         System.out.print("Please enter an expression: ");
 
         try {
-            SymbolicExpression result = p.assignment();
+            SymbolicExpression result = p.top_level();
             System.out.println("result: " + result);
         } catch(SyntaxErrorException e) {
             System.out.print("Syntax Error: ");
