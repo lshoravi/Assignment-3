@@ -14,7 +14,7 @@ public class Test {
         Addition a = new Addition(c1, v);
         Multiplication m = new Multiplication(a, c2);
 
-        System.out.println("(5 + x) * 2 ==> " + m);
-        testPrinting("(5 + x) * 2", m);
+        System.out.println("(5.0 + x) * 2.0 ==> " + m);
+        testPrinting("(5.0 + x) * 2.0", m);
     }
 }
