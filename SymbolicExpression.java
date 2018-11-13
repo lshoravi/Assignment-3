@@ -7,7 +7,6 @@ public abstract class SymbolicExpression {
         return false;
     }
 
-
     public boolean isCommand() {
         return false;
     }
