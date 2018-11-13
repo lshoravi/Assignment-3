@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(System.in);
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp", "neg");
+    private final List<String> commands = Arrays.asList("Vars", "Quit");
 
     public CalculatorParser () {
         this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
@@ -107,7 +108,6 @@ public class CalculatorParser {
             return number();
 
         case StreamTokenizer.TT_WORD:
-            ///TODO: checka alla unary operation!
             if (unaryOperations.contains(st.sval)) {
                 return unary();
             } else {
@@ -146,8 +146,12 @@ public class CalculatorParser {
     }
 
     public SymbolicExpression identifier() {
-        if (st.ttype == StreamTokenizer.TT_WORD) {
-            return new Variable(st.sval);
+        if (st.ttype == StreamTokenizer.TT_WORD ) {
+            if (!commands.contains(st.sval)) {
+                return new Variable(st.sval);
+            } else {
+                throw new SyntaxErrorException("Command used as variable: " + st.sval);
+            }
         } else {
             throw new SyntaxErrorException("Expected string as identifier, got " + st.ttype);
         }
