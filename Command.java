@@ -1,10 +1,8 @@
-
+package org.ioopm.calculator.ast;
 
 public class Command extends SymbolicExpression {
-    protected String op = null;
-
-    public Command(String op) {
-        this.op = op;
+    @Override
+    public boolean isCommand() {
+        return true;
     }
-
 }

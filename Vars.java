@@ -1,7 +1,11 @@
-
+package org.ioopm.calculator.ast;
 
 public class Vars extends Command {
-    public Vars() {
-        super("Vars");
+    private static final Vars theInstance = new Vars();
+
+    private Vars() {}
+
+    public static Vars instance() {
+        return theInstance;
     }
 }

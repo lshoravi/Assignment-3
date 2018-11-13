@@ -1,9 +1,13 @@
-
+package org.ioopm.calculator.ast;
 
 public abstract class SymbolicExpression {
     private int priority = 10;
 
     public boolean isConstant() {
+        return false;
+    }
+
+    public boolean isCommand() {
         return false;
     }
 

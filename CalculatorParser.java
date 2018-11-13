@@ -1,9 +1,10 @@
-
+package org.ioopm.calculator.parser;
 
 import java.io.StreamTokenizer;
 import java.io.IOException;
 import java.util.List;
 import java.util.Arrays;
+import org.ioopm.calculator.ast.*;
 
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(System.in);
@@ -38,10 +39,10 @@ public class CalculatorParser {
     public SymbolicExpression command() throws IOException {
          if (st.ttype == StreamTokenizer.TT_WORD) {
              if (st.sval == "Vars") {
-                 return new Vars();
+                 return Vars.instance();
              }
              else if (st.sval == "Quit") {
-                 return new Quit();
+                 return Quit.instance();
              }
          }
          throw new SyntaxErrorException("Expected \"Vars\" or \"Quit\" as command, got " + st.ttype);

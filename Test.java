@@ -1,3 +1,4 @@
+import org.ioopm.calculator.ast.*;
 
 public class Test {
     public static void testPrinting(String expected, SymbolicExpression e) {
