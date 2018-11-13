@@ -15,4 +15,15 @@ public class Log extends Unary {
     public boolean equals(Log other) {
         return this.pram.equals(other.pram);
     }
+
+    public SymbolicExpression eval() {
+        SymbolicExpression arg = this.pram.eval();
+
+        if(arg.isConstant()) {
+            return new Constant(Math.log(arg.getValue()));
+        }
+        else {
+            return new Log(arg);
+        }
+    }
 }

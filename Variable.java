@@ -15,6 +15,10 @@ public class Variable extends Atom {
         return false;
     }
 
+    public SymbolicExpression eval() {
+        return new Variable(this.id);
+    }
+
     public boolean equals(Variable other) {
         return this.id.equals(other.id);
     }

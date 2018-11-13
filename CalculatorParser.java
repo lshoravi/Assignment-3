@@ -1,13 +1,12 @@
 package org.ioopm.calculator.parser;
 
-import java.io.StreamTokenizer;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Arrays;
 import org.ioopm.calculator.ast.*;
 
 public class CalculatorParser {
-    private final StreamTokenizer st = new StreamTokenizer(System.in);
+    private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp", "neg");
     private final List<String> commands = Arrays.asList("Vars", "Quit");
 

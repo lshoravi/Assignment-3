@@ -15,4 +15,11 @@ public class Assignment extends Binary {
     public boolean equals(Assignment other) {
         return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
     }
+
+    public SymbolicExpression eval() {
+        SymbolicExpression left = this.lhs.eval();
+        SymbolicExpression right = this.rhs;
+
+        return new Assignment(left, right);
+    }
 }

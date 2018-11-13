@@ -12,6 +12,10 @@ public class Binary extends SymbolicExpression {
         this.setPriority(priority);
     }
 
+    public SymbolicExpression eval() {
+        throw new RuntimeException("eval not implemented for operation");
+    }
+
     @Override
     public String getName() {
         return this.op;

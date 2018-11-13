@@ -9,6 +9,10 @@ public class Unary extends SymbolicExpression {
        this.pram = pram;
     }
 
+    public SymbolicExpression eval() {
+        throw new RuntimeException("eval not implemented for operation");
+    }
+
     @Override
     public String getName() {
         return this.op;

@@ -16,8 +16,19 @@ public class Negation extends Unary {
         return this.pram.equals(other.pram);
     }
 
+    public SymbolicExpression eval() {
+        SymbolicExpression arg = this.pram.eval();
+
+        if(arg.isConstant()) {
+            return new Constant(-arg.getValue());
+        }
+        else {
+            return new Negation(arg);
+        }
+    }
+
     @Override
     public String getName() {
-        throw new RuntimeException("WHAT IS NEGATION????");
+        return "-";
     }
 }

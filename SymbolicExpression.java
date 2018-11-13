@@ -7,8 +7,13 @@ public abstract class SymbolicExpression {
         return false;
     }
 
+
     public boolean isCommand() {
         return false;
+    }
+
+    public double getValue() {
+        throw new RuntimeException("getValue called on non-Constant expression");
     }
 
     public String getName() {
@@ -27,9 +32,8 @@ public abstract class SymbolicExpression {
         throw new RuntimeException("equals not defined for expression");
     }
 
-    public SymbolicExpression eval() {
-        throw new RuntimeException("eval not yet implemented");
-    }
+    public abstract SymbolicExpression eval();
+
 
     public String subtreeToString(SymbolicExpression e) {
         if (e.getPriority() < this.getPriority()) {

@@ -5,4 +5,7 @@ public class Command extends SymbolicExpression {
     public boolean isCommand() {
         return true;
     }
-}
+
+    public SymbolicExpression eval() {
+        throw new RuntimeException("Cannot evaluate Command expression");
+    }
