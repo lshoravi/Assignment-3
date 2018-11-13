@@ -7,4 +7,7 @@ public class Command extends SymbolicExpression {
         this.op = op;
     }
 
+    public SymbolicExpression eval() {
+        throw new RuntimeException("Cannot evaluate Command expression");
+    }
 }

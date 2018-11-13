@@ -15,4 +15,15 @@ public class Subtraction extends Binary {
     public boolean equals(Subtraction other) {
         return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
     }
+
+    public SymbolicExpression eval() {
+        SymbolicExpression left = this.lhs.eval();
+        SymbolicExpression right = this.rhs.eval();
+        if(left.isConstant() && right.isConstant()) {
+            return new Constant(left.getValue() - right.getValue());
+        }
+        else {
+            return new Subtraction(left, right);
+        }
+    }
 }

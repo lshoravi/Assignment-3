@@ -17,6 +17,10 @@ public class Constant extends Atom {
         return value;
     }
 
+    public SymbolicExpression eval() {
+        return new Constant(this.value);
+    }
+
     public boolean equals(Object other) {
         if(other instanceof Constant) {
             return this.equals((Constant) other);
