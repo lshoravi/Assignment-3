@@ -3,12 +3,14 @@ package org.ioopm.calculator.parser;
 import java.io.*;
 import java.util.List;
 import java.util.Arrays;
+import java.util.HashMap;
 import org.ioopm.calculator.ast.*;
 
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp", "neg");
     private final List<String> commands = Arrays.asList("Vars", "Quit");
+    private final HashMap<Variable,SymbolicExpression> vars = new HashMap<>();
 
     public CalculatorParser () {
         this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
@@ -50,7 +52,9 @@ public class CalculatorParser {
     public SymbolicExpression assignment() throws IOException {
         SymbolicExpression result = lhs();
         while (st.nextToken() == '=') {
-            result = new Assignment(result, rhs());
+            Variable id = rhs();
+            vars.put(id, result);
+            result = new Assignment(result, id);
         }
         st.pushBack();
         return result;
@@ -60,13 +64,9 @@ public class CalculatorParser {
         return expression();
     }
 
-    public SymbolicExpression rhs() throws IOException {
+    public Variable rhs() throws IOException {
         st.nextToken(); // because identifier does not
-        SymbolicExpression result = identifier();
-        while (st.nextToken() == '=') {
-            result = new Assignment(result, rhs());
-        }
-        st.pushBack();
+        Variable result = identifier();
         return result;
     }
 
@@ -145,7 +145,7 @@ public class CalculatorParser {
 
     }
 
-    public SymbolicExpression identifier() {
+    public Variable identifier() {
         if (st.ttype == StreamTokenizer.TT_WORD ) {
             if (!commands.contains(st.sval)) {
                 return new Variable(st.sval);

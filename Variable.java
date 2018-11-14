@@ -1,4 +1,5 @@
 package org.ioopm.calculator.ast;
+import java.util.HashMap;
 
 public class Variable extends Atom {
     private String id;
@@ -15,7 +16,11 @@ public class Variable extends Atom {
         return false;
     }
 
-    public SymbolicExpression eval() {
+    public SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars) {
+        SymbolicExpression val = vars.get(this.id);
+        if(val != null) {
+            return val;
+        }
         return new Variable(this.id);
     }
 

@@ -1,8 +1,8 @@
 all:
-	javac -cp p:/assignment3/classes  *.java
+	javac -cp classes  *.java
 
 run:
-	java -cp .:$BASE_DIR ParserDriver
+	java -cp classes org.ioopm.calculator.parser.ParserDriver
 
 clean:
 	rm -r *.class
