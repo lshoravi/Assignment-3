@@ -1,4 +1,5 @@
 package org.ioopm.calculator.ast;
+import java.util.HashMap;
 
 public class Multiplication extends Binary {
     public Multiplication(SymbolicExpression lhs, SymbolicExpression rhs) {
@@ -16,9 +17,9 @@ public class Multiplication extends Binary {
         return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
     }
 
-    public SymbolicExpression eval() {
-        SymbolicExpression left = this.lhs.eval();
-        SymbolicExpression right = this.rhs.eval();
+    public SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars) {
+        SymbolicExpression left = this.lhs.eval(vars);
+        SymbolicExpression right = this.rhs.eval(vars);
         if(left.isConstant() && right.isConstant()) {
             return new Constant(left.getValue() * right.getValue());
         }

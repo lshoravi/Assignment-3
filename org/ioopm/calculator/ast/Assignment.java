@@ -1,4 +1,6 @@
 package org.ioopm.calculator.ast;
+import java.util.HashMap;
+
 
 public class Assignment extends Binary {
     public Assignment(SymbolicExpression lhs, SymbolicExpression rhs) {
@@ -16,8 +18,8 @@ public class Assignment extends Binary {
         return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
     }
 
-    public SymbolicExpression eval() {
-        SymbolicExpression left = this.lhs.eval();
+    public SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars) {
+        SymbolicExpression left = this.lhs.eval(vars);
         SymbolicExpression right = this.rhs;
 
         return new Assignment(left, right);

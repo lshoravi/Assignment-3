@@ -1,4 +1,5 @@
 package org.ioopm.calculator.ast;
+import java.util.HashMap;
 
 public abstract class SymbolicExpression {
     private int priority = 10;
@@ -31,8 +32,7 @@ public abstract class SymbolicExpression {
         throw new RuntimeException("equals not defined for expression");
     }
 
-    public abstract SymbolicExpression eval();
-
+    public abstract SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars);
 
     public String subtreeToString(SymbolicExpression e) {
         if (e.getPriority() < this.getPriority()) {

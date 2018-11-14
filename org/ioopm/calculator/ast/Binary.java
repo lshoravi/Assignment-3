@@ -1,4 +1,5 @@
 package org.ioopm.calculator.ast;
+import java.util.HashMap;
 
 public class Binary extends SymbolicExpression {
     protected String op = null;
@@ -12,7 +13,7 @@ public class Binary extends SymbolicExpression {
         this.setPriority(priority);
     }
 
-    public SymbolicExpression eval() {
+    public SymbolicExpression eval(HashMap<Variable, SymbolicExpression> vars) {
         throw new RuntimeException("eval not implemented for operation");
     }
 

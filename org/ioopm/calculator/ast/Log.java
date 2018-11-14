@@ -1,4 +1,5 @@
 package org.ioopm.calculator.ast;
+import java.util.HashMap;
 
 public class Log extends Unary {
     public Log(SymbolicExpression pram) {
@@ -16,8 +17,8 @@ public class Log extends Unary {
         return this.pram.equals(other.pram);
     }
 
-    public SymbolicExpression eval() {
-        SymbolicExpression arg = this.pram.eval();
+    public SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars) {
+        SymbolicExpression arg = this.pram.eval(vars);
 
         if(arg.isConstant()) {
             return new Constant(Math.log(arg.getValue()));
