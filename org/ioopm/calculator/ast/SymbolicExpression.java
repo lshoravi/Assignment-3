@@ -32,7 +32,7 @@ public abstract class SymbolicExpression {
         throw new RuntimeException("equals not defined for expression");
     }
 
-    public abstract SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars);
+    public abstract SymbolicExpression eval(HashMap<String,SymbolicExpression> vars);
 
     public String subtreeToString(SymbolicExpression e) {
         if (e.getPriority() < this.getPriority()) {

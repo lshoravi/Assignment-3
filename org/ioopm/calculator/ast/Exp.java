@@ -17,7 +17,7 @@ public class Exp extends Unary {
         return this.pram.equals(other.pram);
     }
 
-    public SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars) {
+    public SymbolicExpression eval(HashMap<String,SymbolicExpression> vars) {
         SymbolicExpression arg = this.pram.eval(vars);
 
         if(arg.isConstant()) {

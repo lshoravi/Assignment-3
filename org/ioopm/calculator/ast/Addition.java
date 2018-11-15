@@ -18,7 +18,7 @@ public class Addition extends Binary {
         return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
     }
 
-    public SymbolicExpression eval(HashMap<Variable,SymbolicExpression> vars) {
+    public SymbolicExpression eval(HashMap<String,SymbolicExpression> vars) {
         SymbolicExpression left = this.lhs.eval(vars);
         SymbolicExpression right = this.rhs.eval(vars);
         if(left.isConstant() && right.isConstant()) {

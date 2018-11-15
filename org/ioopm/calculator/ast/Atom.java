@@ -9,7 +9,7 @@ public class Atom extends SymbolicExpression {
         this.type = type;
     }
 
-    public SymbolicExpression eval(HashMap<Variable, SymbolicExpression> vars) {
+    public SymbolicExpression eval(HashMap<String, SymbolicExpression> vars) {
         throw new RuntimeException("eval not implemented for type");
     }
 }

@@ -8,3 +8,7 @@ run:
 clean:
 	rm -r  org/ioopm/calculator/ast/*.class
 	rm -r  org/ioopm/calculator/parser/*.class
+
+test: all
+	javac Test.java
+	java Test

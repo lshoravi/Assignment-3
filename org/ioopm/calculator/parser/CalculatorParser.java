@@ -10,7 +10,7 @@ public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp", "neg");
     private final List<String> commands = Arrays.asList("Vars", "Quit");
-    private final HashMap<Variable,SymbolicExpression> vars = new HashMap<>();
+    private final HashMap<String,SymbolicExpression> vars = new HashMap<>();
 
     public CalculatorParser () {
         this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
@@ -53,7 +53,7 @@ public class CalculatorParser {
         SymbolicExpression result = lhs();
         while (st.nextToken() == '=') {
             Variable id = rhs();
-            vars.put(id, result);
+            vars.put(id.toString(), result);
             result = new Assignment(result, id);
         }
         st.pushBack();
@@ -164,6 +164,4 @@ public class CalculatorParser {
                  throw new SyntaxErrorException("Expected number as number, got " + st.ttype);
             }
     }
-
-
 }
