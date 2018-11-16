@@ -8,7 +8,7 @@ import org.ioopm.calculator.ast.*;
 
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
-    private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp", "neg");
+    private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp");
     private final List<String> commands = Arrays.asList("Vars", "Quit");
     private final HashMap<String,SymbolicExpression> vars = new HashMap<>();
 
@@ -122,25 +122,31 @@ public class CalculatorParser {
                 throw new SyntaxErrorException("Missmatched paranthesis, assignment followed by " + st.ttype);
             }
 
+        case ('-'):
+            return unary();
+
+
         default:
            throw new SyntaxErrorException("Expected strings, number or paranthesis as primary, got " + st.ttype);
         }
     }
 
     public SymbolicExpression unary() throws IOException {
-        switch (st.sval) {
-        case "log":
-            return new Log(primary());
-        case "exp":
-            return new Exp(primary());
-        case "neg":
-            return new Negation(primary());
-        case "cos":
-            return new Cos(primary());
-        case "sin":
-            return new Sin(primary());
-        default:
-            throw new SyntaxErrorException("Expected unary operator, got " + st.sval);
+         if (st.ttype == '-') {
+                return new Negation(primary());
+            } else {
+             switch (st.sval) {
+             case "log":
+                 return new Log(primary());
+             case "exp":
+                 return new Exp(primary());
+             case "cos":
+                 return new Cos(primary());
+             case "sin":
+                 return new Sin(primary());
+             default:
+                 throw new SyntaxErrorException("Expected unary operator, got " + st.sval);
+                 }
         }
 
     }
