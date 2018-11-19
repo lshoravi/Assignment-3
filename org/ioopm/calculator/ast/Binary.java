@@ -13,7 +13,7 @@ public class Binary extends SymbolicExpression {
         this.setPriority(priority);
     }
 
-    public SymbolicExpression eval(HashMap<String, SymbolicExpression> vars) {
+    public SymbolicExpression eval(Environment vars) {
         throw new RuntimeException("eval not implemented for operation");
     }
 

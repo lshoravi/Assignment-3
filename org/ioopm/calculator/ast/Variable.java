@@ -16,7 +16,7 @@ public class Variable extends Atom {
         return false;
     }
 
-    public SymbolicExpression eval(HashMap<String,SymbolicExpression> vars) {
+    public SymbolicExpression eval(Environment vars) {
         SymbolicExpression val = vars.get(this.id);
         if(val != null) {
             return val;
