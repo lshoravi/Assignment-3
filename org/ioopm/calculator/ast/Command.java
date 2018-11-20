@@ -7,7 +7,7 @@ public class Command extends SymbolicExpression {
         return true;
     }
 
-    public SymbolicExpression eval(HashMap<String, SymbolicExpression> vars) {
+    public SymbolicExpression eval(Environment vars) {
         throw new RuntimeException("Cannot evaluate Command expression");
     }
 }

@@ -17,7 +17,7 @@ public class Log extends Unary {
         return this.pram.equals(other.pram);
     }
 
-    public SymbolicExpression eval(HashMap<String,SymbolicExpression> vars) {
+    public SymbolicExpression eval(Environment vars) {
         SymbolicExpression arg = this.pram.eval(vars);
 
         if(arg.isConstant()) {

@@ -19,7 +19,7 @@ public class Constant extends Atom {
         return value;
     }
 
-    public SymbolicExpression eval(HashMap<String,SymbolicExpression> vars) {
+    public SymbolicExpression eval(Environment vars) {
         return new Constant(this.value);
     }
 

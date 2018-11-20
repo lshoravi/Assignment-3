@@ -10,7 +10,7 @@ public class Test {
         }
     }
 
-    public static void testEvaluating(SymbolicExpression expected, SymbolicExpression e, HashMap<String,SymbolicExpression> vars) {
+    public static void testEvaluating(SymbolicExpression expected, SymbolicExpression e, Environment vars) {
         SymbolicExpression r = e.eval(vars);
         if (r.equals(expected)) {
             System.out.println("Passed: " + e);
@@ -26,7 +26,7 @@ public class Test {
         Variable v = new Variable("x");
         Addition a = new Addition(c1, v);
         Multiplication m = new Multiplication(a, c2);
-        HashMap<String,SymbolicExpression> vars = new HashMap<String,SymbolicExpression>();
+        Environment vars = new Environment();
         System.out.println("(5 + x) * 2 ==> " + m);
         testPrinting("(5 + x) * 2", m);
 

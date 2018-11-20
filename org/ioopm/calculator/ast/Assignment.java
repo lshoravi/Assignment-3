@@ -24,7 +24,7 @@ public class Assignment extends Binary {
         return this.lhs.equals(other.lhs) && this.rhs.equals(other.rhs);
     }
 
-    public SymbolicExpression eval(HashMap<String,SymbolicExpression> vars) {
+    public SymbolicExpression eval(Environment vars) {
         SymbolicExpression left = this.lhs.eval(vars);
         SymbolicExpression right = this.rhs;
 
