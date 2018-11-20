@@ -7,6 +7,12 @@ public class Assignment extends Binary {
         super("=", lhs, rhs, 1);
     }
 
+    public class IllegalExpressionException extends RuntimeException {
+        public IllegalExpressionException(String msg) {
+            super(msg);
+        }
+    }
+
     public boolean equals(Object other) {
         if(other instanceof Assignment) {
             return this.equals((Assignment) other);
