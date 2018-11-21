@@ -54,7 +54,8 @@ public class Test {
         
         vars = new Environment();
         SymbolicExpression ass2 = new Assignment(new Constant(Math.PI), new Variable("x"));
-        SymbolicExpression sin = new Sin(ass2);
+        SymbolicExpression sin = new Sin(new Variable("x"));
+        ass2.eval(vars);
         testEvaluating(new Constant(0), sin, vars);
     }
 }
