@@ -1,4 +1,4 @@
-private class NamedConstant extends Constant {
+public class NamedConstant extends Constant {
     private String name;
 
     public NamedConstant(double value, String name) {
