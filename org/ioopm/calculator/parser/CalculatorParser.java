@@ -1,5 +1,7 @@
 
+
 package org.ioopm.calculator.parser;
+
 
 import java.io.*;
 import java.util.List;
@@ -19,7 +21,7 @@ public class CalculatorParser {
     }
 
     public SymbolicExpression top_level() throws IOException {
-        SymbolicExpression result = statement();
+        SymbolicExpression result = statement().eval(vars);
         if  (st.nextToken() == StreamTokenizer.TT_EOL) {
             return result;
         } else {
@@ -113,6 +115,8 @@ public class CalculatorParser {
         case StreamTokenizer.TT_WORD:
             if (unaryOperations.contains(st.sval)) {
                 return unary();
+            } else if (Constants.namedConstants.containsKey(st.sval)){
+                return new NamedConstant(Constants.namedConstants.get(st.sval), st.sval);
             } else {
                 return identifier();
             }
@@ -156,8 +160,12 @@ public class CalculatorParser {
 
     public Variable identifier() {
         if (st.ttype == StreamTokenizer.TT_WORD ) {
-            if (!commands.contains(st.sval)) {
-                return new Variable(st.sval);
+            if (!commands.contains(st.sval) ) {
+                if (!Constants.namedConstants.containsKey(st.sval)) {
+                     return new Variable(st.sval);
+                } else {
+                    throw new Assignment.IllegalExpressionException("Can not overwrite named constant " + st.sval);
+                }
             } else {
                 throw new SyntaxErrorException("Command used as variable: " + st.sval);
             }

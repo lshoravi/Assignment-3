@@ -1,9 +1,11 @@
 all:
 	javac org/ioopm/calculator/ast/*.java
 	javac org/ioopm/calculator/parser/*.java
+	javac org/ioopm/calculator/Calculator.java
+
 
 run:
-	java org/ioopm/calculator/parser/ParserDriver
+	java org/ioopm/calculator/Calculator
 
 clean:
 	rm -r  org/ioopm/calculator/ast/*.class

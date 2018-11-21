@@ -12,6 +12,4 @@ public class NamedConstant extends Constant {
     public String toString() {
         return this.name;
     }
-
-
 }

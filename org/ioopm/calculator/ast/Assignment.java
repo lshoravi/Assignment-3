@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 public class Assignment extends Binary {
     private Variable var;
-    
+
     public Assignment(SymbolicExpression lhs, Variable rhs) {
         super("=", lhs, rhs, 1);
         var = rhs;
     }
 
-    public class IllegalExpressionException extends RuntimeException {
+    public static class IllegalExpressionException extends RuntimeException {
         public IllegalExpressionException(String msg) {
             super(msg);
         }
