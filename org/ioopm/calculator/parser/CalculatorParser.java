@@ -30,7 +30,7 @@ public class CalculatorParser {
     public SymbolicExpression statement() throws IOException {
         st.nextToken();
         if (st.ttype == StreamTokenizer.TT_WORD) {
-            if ((commands.contains(st.sval))  {
+            if (commands.contains(st.sval))  {
                     return command();
             }
         }
@@ -39,18 +39,18 @@ public class CalculatorParser {
     }
 
     public SymbolicExpression command() throws IOException {
-         if (st.ttype == StreamTokenizer.TT_WORD) {
-             if (st.sval == "Vars") {
-                 return Vars.instance();
-             }
-             else if (st.sval == "Quit") {
-                 return Quit.instance();
-             }
-             else if (st.sval == "Clear") {
-                 return Clear.instance();
-             }
-         }
-         throw new SyntaxErrorException("Expected \"Vars\", \"Clear\" or \"Quit\" as command, got " + st.ttype);
+        if (st.ttype == StreamTokenizer.TT_WORD) {
+            if (st.sval.equals( "Vars")) {
+                return Vars.instance();
+            }
+            else if (st.sval.equals("Quit")) {
+                return Quit.instance();
+            }
+            else if (st.sval.equals("Clear")) {
+                return Clear.instance();
+            }
+        }
+        throw new SyntaxErrorException("Expected \"Vars\", \"Clear\" or \"Quit\" as command, got " + st.ttype + st.sval);
     }
 
     public SymbolicExpression assignment() throws IOException {
