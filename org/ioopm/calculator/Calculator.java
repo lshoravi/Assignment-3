@@ -9,6 +9,7 @@ public class Calculator {
     public static void main(String[] args) {
         CalculatorParser p = new CalculatorParser();
         boolean dontQuit = true;
+        Environment vars = new Environment();
 
         System.out.println("Welcome to the parser!");
 
@@ -17,7 +18,22 @@ public class Calculator {
              try {
 
                  SymbolicExpression result = p.top_level();
-                 System.out.println("result: " + result);
+
+                 if (result.isCommand()) {
+                     switch (result.toString()) {
+                     case ("Clear"):
+                         vars.clear();
+                         break;
+                     case ("Vars"):
+                         System.out.println(vars.toString());
+                         break;
+                     case ("Quit"):
+                         dontQuit = false;
+                     }
+
+                 } else {
+                     System.out.println("result: " + result.eval(vars));
+                 }
 
              } catch(SyntaxErrorException e) {
                  System.out.print("Syntax Error: ");

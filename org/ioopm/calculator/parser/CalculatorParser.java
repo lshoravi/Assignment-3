@@ -13,15 +13,15 @@ public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp");
     private final List<String> commands = Arrays.asList("Vars", "Quit", "Clear");
-    private final Environment vars = new Environment();
 
     public CalculatorParser () {
         this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
+        this.st.ordinaryChar('/');
         this.st.eolIsSignificant(true); /// parse end-of-line as ordinary token
     }
 
     public SymbolicExpression top_level() throws IOException {
-        SymbolicExpression result = statement().eval(vars);
+        SymbolicExpression result =statement();
         if  (st.nextToken() == StreamTokenizer.TT_EOL) {
             return result;
         } else {
@@ -94,6 +94,7 @@ public class CalculatorParser {
         SymbolicExpression result = primary();
         st.nextToken();
         while (st.ttype == '*' || st.ttype == '/') {
+            System.out.println("Coin coin");
             if (st.ttype == '*') {
                 result = new Multiplication(result, primary());
             } else {

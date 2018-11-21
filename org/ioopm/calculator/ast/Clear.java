@@ -8,4 +8,9 @@ public class Clear extends Command {
     public static Clear instance() {
         return theInstance;
     }
+
+    @Override
+    public String toString() {
+        return "Clear";
+    }
 }
