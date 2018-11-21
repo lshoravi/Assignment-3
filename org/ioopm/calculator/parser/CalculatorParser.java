@@ -1,3 +1,4 @@
+
 package org.ioopm.calculator.parser;
 
 import java.io.*;
@@ -9,7 +10,7 @@ import org.ioopm.calculator.ast.*;
 public class CalculatorParser {
     private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp");
-    private final List<String> commands = Arrays.asList("Vars", "Quit");
+    private final List<String> commands = Arrays.asList("Vars", "Quit", "Clear");
     private final Environment vars = new Environment();
 
     public CalculatorParser () {
@@ -29,7 +30,7 @@ public class CalculatorParser {
     public SymbolicExpression statement() throws IOException {
         st.nextToken();
         if (st.ttype == StreamTokenizer.TT_WORD) {
-            if ((st.sval == "Vars") || (st.sval == "Quit"))  {
+            if ((commands.contains(st.sval))  {
                     return command();
             }
         }
@@ -45,8 +46,11 @@ public class CalculatorParser {
              else if (st.sval == "Quit") {
                  return Quit.instance();
              }
+             else if (st.sval == "Clear") {
+                 return Clear.instance();
+             }
          }
-         throw new SyntaxErrorException("Expected \"Vars\" or \"Quit\" as command, got " + st.ttype);
+         throw new SyntaxErrorException("Expected \"Vars\", \"Clear\" or \"Quit\" as command, got " + st.ttype);
     }
 
     public SymbolicExpression assignment() throws IOException {
