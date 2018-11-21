@@ -53,7 +53,6 @@ public class CalculatorParser {
         SymbolicExpression result = lhs();
         while (st.nextToken() == '=') {
             Variable id = rhs();
-            vars.put(id, result);
             result = new Assignment(result, id);
         }
         st.pushBack();
