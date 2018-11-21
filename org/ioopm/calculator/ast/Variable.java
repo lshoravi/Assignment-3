@@ -30,7 +30,7 @@ public class Variable extends Atom {
 
     @Override
     public int hashCode() {
-        return 31 * this.id.hashCode();
+        return this.id.hashCode();
     }
 
     @Override
