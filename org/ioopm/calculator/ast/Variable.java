@@ -17,7 +17,7 @@ public class Variable extends Atom {
     }
 
     public SymbolicExpression eval(Environment vars) {
-        SymbolicExpression val = vars.get(this.id);
+        SymbolicExpression val = vars.get(this);
         if(val != null) {
             return val;
         }
@@ -26,6 +26,11 @@ public class Variable extends Atom {
 
     public boolean equals(Variable other) {
         return this.id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * this.id.hashCode();
     }
 
     @Override

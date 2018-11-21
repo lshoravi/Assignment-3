@@ -3,8 +3,11 @@ import java.util.HashMap;
 
 
 public class Assignment extends Binary {
-    public Assignment(SymbolicExpression lhs, SymbolicExpression rhs) {
+    private Variable var;
+    
+    public Assignment(SymbolicExpression lhs, Variable rhs) {
         super("=", lhs, rhs, 1);
+        var = rhs;
     }
 
     public class IllegalExpressionException extends RuntimeException {
@@ -26,8 +29,8 @@ public class Assignment extends Binary {
 
     public SymbolicExpression eval(Environment vars) {
         SymbolicExpression left = this.lhs.eval(vars);
-        SymbolicExpression right = this.rhs;
-
-        return new Assignment(left, right);
+        Variable right = this.var;
+        vars.put(right, left);
+        return left;
     }
 }
