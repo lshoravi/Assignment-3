@@ -15,7 +15,7 @@ public class Test {
         if (r.equals(expected)) {
             System.out.println("Passed: " + e + " = " + expected);
         } else {
-            System.out.println("Error: expected '" + expected + "' but got '" + e + "'");
+            System.out.println("Error: expected '" + expected + "' but got '" + r + "'");
         }
     }
 
@@ -53,9 +53,8 @@ public class Test {
         testEvaluating(new Constant(2), assTest, vars);
         
         vars = new Environment();
-        SymbolicExpression ass2 = new Assignment(new Constant(Math.PI), new Variable("x"));
-        SymbolicExpression sin = new Sin(new Variable("x"));
-        ass2.eval(vars);
-        testEvaluating(new Constant(0), sin, vars);
+        SymbolicExpression ass2 = new Assignment(new Constant(0), new Variable("x"));
+        SymbolicExpression exp = new Exp(ass2);
+        testEvaluating(new Constant(1), exp, vars);
     }
 }
