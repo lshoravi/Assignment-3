@@ -161,7 +161,7 @@ public class CalculatorParser {
 
     public Variable identifier() {
         if (st.ttype == StreamTokenizer.TT_WORD ) {
-            if (!commands.contains(st.sval) ) {
+            if (!commands.contains(st.sval)) {
                 if (!Constants.namedConstants.containsKey(st.sval)) {
                      return new Variable(st.sval);
                 } else {
