@@ -5,6 +5,14 @@ import java.io.IOException;
 import org.ioopm.calculator.ast.*;
 import org.ioopm.calculator.parser.*;
 
+/**
+ * This class represents <i>the calculator
+ * </i>.
+ *
+ * @author Astrid Nord Olsson, Nils Hedberg
+ * @version 1.0
+ */
+
 public class Calculator {
 
     public static void main(String[] args) {
