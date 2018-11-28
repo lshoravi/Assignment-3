@@ -19,35 +19,33 @@ import org.ioopm.calculator.ast.*;
 public class CalculatorParser {
     /**
      * Holds the tokenizer that reads the input of the parser
-     * @see #st
      */
     private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
 
     /**
      * Holds a list of accepted function operators in the calculator
-     * @see #unaryOperations
      */
     private final List<String> unaryOperations = Arrays.asList("sin", "cos", "log", "exp");
 
     /**
      * Holds a list of the accepted commands to the calculator
-     * @see #commands
      */
     private final List<String> commands = Arrays.asList("Vars", "Quit", "Clear");
 
     /**
-     * Creates a new parser object
+     * Constructor for the parser
      */
     public CalculatorParser () {
-        this.st.ordinaryChar('-'); /// parse object-oriented as "object" - "oriented" :)
+        this.st.ordinaryChar('-');
         this.st.ordinaryChar('/');
-        this.st.eolIsSignificant(true); /// parse end-of-line as ordinary token
+        this.st.eolIsSignificant(true);
     }
 
     /**
      * Initiates the parsing of an input expression
      * @exception IOException thrown if there was an error in the tokenizer
      * @exception SyntaxErrorException thrown if there was no EOL(end of line) symbol
+     * @return An unevaluated SymbolicExpression representing the parsed input
      */
     public SymbolicExpression top_level() throws IOException {
         SymbolicExpression result =statement();
@@ -61,6 +59,7 @@ public class CalculatorParser {
     /**
      * Parses an entire input expression
      * @exception IOException thrown if there was an error in the tokenizer
+     * @return An unevaluated SymbolicExpression representing the parsed input
      */
     public SymbolicExpression statement() throws IOException {
         st.nextToken();
@@ -77,6 +76,7 @@ public class CalculatorParser {
      * Matches an input expression with a valid command
      * @exception IOException thrown if there was an error in the tokenizer
      * @exception SyntaxErrorException thrown if the parsed expression could not be matched with a valid command
+     * @return A SymbolicExpression of the parsed command
      */
     public SymbolicExpression command() throws IOException {
         if (st.ttype == StreamTokenizer.TT_WORD) {
@@ -96,6 +96,7 @@ public class CalculatorParser {
     /**
      * Tries to parse an expression and make an assignment to a variable
      * @exception IOException thrown if there was an error in the tokenizer
+     * @return An unevaluated SymbolicExpression containing an Assignment
      */
     public SymbolicExpression assignment() throws IOException {
         SymbolicExpression result = lhs();
@@ -108,16 +109,18 @@ public class CalculatorParser {
     }
 
     /**
-     * Helper function for assignment, returns the left hand side of the equality
+     * Helper function for assignment(), returns the left hand side of the equality
      * @exception IOException thrown if there was an error in the tokenizer
+     * @return An unevaluated SymbolicExpression
      */
     public SymbolicExpression lhs() throws IOException {
         return expression();
     }
 
-    /*
-     * Helper function for assignment, returns the right hand side variable to be assigned
+    /**
+     * Helper function for assignment(), returns the right hand side variable to be assigned
      * @exception IOException thrown if there was an error in the tokenizer
+     * @return A SymbolicExpression of type Variable to be assigned a value
      */
     public Variable rhs() throws IOException {
         st.nextToken(); // because identifier does not
@@ -128,6 +131,7 @@ public class CalculatorParser {
     /**
      * Tries to parse an expression as two arithmetic terms in addition or subtraction
      * @exception IOException thrown if there was an error in the tokenizer
+     * @return An unevaluated SymbolicExpression containing arithmetic
      */
     public SymbolicExpression expression() throws IOException {
         SymbolicExpression result = term();
@@ -147,6 +151,7 @@ public class CalculatorParser {
     /**
      * Tries to parse a term and its internal multiplications and divisions
      * @exception IOException thrown if there was an error in the tokenizer
+     * @return An unevaluated SymbolicExpression containing arithmetic
      */
     public SymbolicExpression term() throws IOException {
         SymbolicExpression result = primary();
@@ -167,6 +172,7 @@ public class CalculatorParser {
      * Tries to parse a number value, constant or variable. If primary() parses a parenthesis character it will try to parse an entire new assignment() within the parenthesis
      * @exception IOException thrown if there was an error in the tokenizer
      * @exception SyntaxErrorException thrown if a mismatched parenthesis was parsed
+     * @return A unevaluated SymbolicExpressin containing either a unary() or atomic expression
      */
     public SymbolicExpression primary() throws IOException {
         int next = st.nextToken();
@@ -205,6 +211,7 @@ public class CalculatorParser {
      * Tries to parse input as a unary mathematical function
      * @exception IOException thrown if there was an error in the tokenizer
      * @exception SyntaxErrorException thrown if the token was not recognized as a valid function
+     * @return An unevaluated SymbolicExpression containing a mathematical function
      */
     public SymbolicExpression unary() throws IOException {
          if (st.ttype == '-') {
@@ -232,6 +239,7 @@ public class CalculatorParser {
      * @exception IllegalExpressionException thrown if the token being parsed is already identified as a Named Constant (for example pi)
      * @exception SyntaxErrorException #1 thrown if the token being parsed is a command
      * @exception SyntaxErrorException #2 thrown if the token was not recognized as a string
+     * @return A SymbolicExpression of type Variable identified by the parsed string
      */
     public Variable identifier() {
         if (st.ttype == StreamTokenizer.TT_WORD ) {
@@ -253,6 +261,7 @@ public class CalculatorParser {
      * Tries to parse a number
      * @exception IOException thrown if there was an error in the tokenizer
      * @exception SyntaxErrorException thrown if token was not recognized as a number
+     * @return A SymbolicExpression of type Constant
      */
     public SymbolicExpression number() {
             if (st.ttype == StreamTokenizer.TT_NUMBER) {

@@ -4,7 +4,7 @@ all:
 	javac org/ioopm/calculator/Calculator.java
 
 
-run:
+run: all
 	java org/ioopm/calculator/Calculator
 
 clean:
