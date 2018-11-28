@@ -16,7 +16,7 @@ public class Binary extends SymbolicExpression {
     protected String op = null;
 
     /**
-   * Holds the lefthand side of the binary expression.
+   * Holds the lefthand side of the bin<ary expression.
    * @see #lhs
    */
     protected SymbolicExpression lhs = null;
@@ -63,7 +63,7 @@ public class Binary extends SymbolicExpression {
         return this.op;
     }
 
-      /**
+    /**
    * Get string representation of expression.
    * @return String representation.
    */
