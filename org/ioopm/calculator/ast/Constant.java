@@ -10,7 +10,6 @@ import java.util.HashMap;
  * @version 1.0
  */
 public class Constant extends Atom {
-    ublic class Binary extends SymbolicExpression {
     /**
    * Holds the value.
    * @see #value
