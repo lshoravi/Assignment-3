@@ -62,15 +62,17 @@ public class CalculatorParser {
      * @return An unevaluated SymbolicExpression representing the parsed input
      */
     public SymbolicExpression statement() throws IOException {
-        st.nextToken();
-        if (st.ttype == StreamTokenizer.TT_WORD) {
-            if (commands.contains(st.sval))  {
-                    return command();
-            }
+        boolean isWord = st.nextToken() == StreamTokenizer.TT_WORD;
+        boolean isCommand = commands.contains(st.sval);
+
+        if (isWord && isCommand) {
+            return command();
         }
+
         st.pushBack();
         return assignment();
     }
+
 
     /**
      * Matches an input expression with a valid command
@@ -80,13 +82,14 @@ public class CalculatorParser {
      */
     public SymbolicExpression command() throws IOException {
         if (st.ttype == StreamTokenizer.TT_WORD) {
-            if (st.sval.equals( "Vars")) {
+            String word = this.st.sval;
+            if (word.equals("Vars")) {
                 return Vars.instance();
             }
-            else if (st.sval.equals("Quit")) {
+            else if (word.equals("Quit")) {
                 return Quit.instance();
             }
-            else if (st.sval.equals("Clear")) {
+            else if (word.equals("Clear")) {
                 return Clear.instance();
             }
         }
@@ -99,22 +102,13 @@ public class CalculatorParser {
      * @return An unevaluated SymbolicExpression containing an Assignment
      */
     public SymbolicExpression assignment() throws IOException {
-        SymbolicExpression result = lhs();
+        SymbolicExpression result = expression();
         while (st.nextToken() == '=') {
             Variable id = rhs();
             result = new Assignment(result, id);
         }
         st.pushBack();
         return result;
-    }
-
-    /**
-     * Helper function for assignment(), returns the left hand side of the equality
-     * @exception IOException thrown if there was an error in the tokenizer
-     * @return An unevaluated SymbolicExpression
-     */
-    public SymbolicExpression lhs() throws IOException {
-        return expression();
     }
 
     /**

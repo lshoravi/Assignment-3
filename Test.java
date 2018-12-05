@@ -12,6 +12,7 @@ public class Test {
     }
 
     public static void testEvaluating(SymbolicExpression expected, SymbolicExpression e, Environment vars) {
+        Environment vars = new Environment();
         SymbolicExpression r = e.eval(vars);
         if (r.equals(expected)) {
             System.out.println("Passed: " + e + " = " + expected);
@@ -34,26 +35,21 @@ public class Test {
         SymbolicExpression add = new Addition(new Constant(5), new Constant(37));
         SymbolicExpression cons = new Constant(42);
         testEvaluating(cons, add, vars); /// Tests if reducing a returns b (it should!)
-        
-        vars = new Environment();
+
         SymbolicExpression mul = new Multiplication(new Addition(new Constant(2), new Constant(4)), new Constant(3));
         testEvaluating(new Constant(18), mul, vars);
-        
-        vars = new Environment();
+
         Assignment ass = new Assignment(new Constant(42), new Variable("x"));
-        
+
         SymbolicExpression div = new Division(ass, new Constant(6));
         testEvaluating(new Constant(7), div, vars);
 
-        vars = new Environment();
         SymbolicExpression neg = new Negation(new Constant(42));
         testEvaluating(new Constant(-42), neg, vars);
 
-        vars = new Environment();
         SymbolicExpression assTest = new Assignment(new Constant(2), new Variable("y"));
         testEvaluating(new Constant(2), assTest, vars);
-        
-        vars = new Environment();
+
         SymbolicExpression ass2 = new Assignment(new Constant(0), new Variable("x"));
         SymbolicExpression exp = new Exp(ass2);
         testEvaluating(new Constant(1), exp, vars);
