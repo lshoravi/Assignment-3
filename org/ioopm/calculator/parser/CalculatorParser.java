@@ -52,7 +52,7 @@ public class CalculatorParser {
         if  (st.nextToken() == StreamTokenizer.TT_EOL) {
             return result;
         } else {
-            throw new SyntaxErrorException("Expected EOL after statement, got " + st.ttype);
+            throw new SyntaxErrorException("Expected EOL after statement, got " + (char) st.ttype);
         }
     }
 
@@ -90,7 +90,7 @@ public class CalculatorParser {
                 return Clear.instance();
             }
         }
-        throw new SyntaxErrorException("Expected \"Vars\", \"Clear\" or \"Quit\" as command, got " + st.ttype + st.sval);
+        throw new SyntaxErrorException("Expected \"Vars\", \"Clear\" or \"Quit\" as command, got " + (char) st.ttype + st.sval);
     }
 
     /**
@@ -195,7 +195,7 @@ public class CalculatorParser {
             if (st.nextToken() == ')') {
                 return result;
             } else {
-                throw new SyntaxErrorException("Mismatched paranthesis, assignment followed by " + st.ttype);
+                throw new SyntaxErrorException("Mismatched paranthesis, assignment followed by " + (char) st.ttype);
             }
 
         case ('-'):
@@ -203,7 +203,7 @@ public class CalculatorParser {
 
 
         default:
-           throw new SyntaxErrorException("Expected strings, number or paranthesis as primary, got " + st.ttype);
+            throw new SyntaxErrorException("Expected strings, number or paranthesis as primary, got " + (char) st.ttype);
         }
     }
 
@@ -253,7 +253,7 @@ public class CalculatorParser {
                 throw new SyntaxErrorException("Command used as variable: " + st.sval);
             }
         } else {
-            throw new SyntaxErrorException("Expected string as identifier, got " + st.ttype);
+            throw new SyntaxErrorException("Expected string as identifier, got " + (char) st.ttype);
         }
     }
 
@@ -267,7 +267,7 @@ public class CalculatorParser {
             if (st.ttype == StreamTokenizer.TT_NUMBER) {
                 return new Constant(st.nval);
             } else {
-                 throw new SyntaxErrorException("Expected number as number, got " + st.ttype);
+                throw new SyntaxErrorException("Expected number as number, got " + (char) st.ttype);
             }
     }
 }
