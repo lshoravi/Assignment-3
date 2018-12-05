@@ -20,7 +20,7 @@ public class CalculatorParser {
     /**
      * Holds the tokenizer that reads the input of the parser
      */
-    private final StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+    private StreamTokenizer st;
 
     /**
      * Holds a list of accepted function operators in the calculator
@@ -36,6 +36,17 @@ public class CalculatorParser {
      * Constructor for the parser
      */
     public CalculatorParser () {
+        this.st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        this.st.ordinaryChar('-');
+        this.st.ordinaryChar('/');
+        this.st.eolIsSignificant(true);
+    }
+
+    /**
+     * Overloaded constructor for the sake of testing.
+     */
+    public CalculatorParser(String s) {
+        this.st = new StreamTokenizer(new StringReader(s));
         this.st.ordinaryChar('-');
         this.st.ordinaryChar('/');
         this.st.eolIsSignificant(true);
@@ -48,7 +59,7 @@ public class CalculatorParser {
      * @return An unevaluated SymbolicExpression representing the parsed input
      */
     public SymbolicExpression top_level() throws IOException {
-        SymbolicExpression result =statement();
+        SymbolicExpression result = statement();
         if  (st.nextToken() == StreamTokenizer.TT_EOL) {
             return result;
         } else {
